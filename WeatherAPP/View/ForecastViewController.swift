@@ -18,7 +18,6 @@ class ForecastViewController: UITableViewController {
         viewModel.gettingDataReady()
         
         viewModel.downloadLogo(completion: {
-//            self.viewModel.addViews()
             self.tableView.reloadData()
         })
         
@@ -45,11 +44,7 @@ class ForecastViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        if section == 0 {
             return viewModel.addViews()
-        }
-        
-        return nil
         
     }
     
@@ -58,14 +53,17 @@ class ForecastViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.keysArray.count
+        return viewModel.array!.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastCell", for: indexPath) as? ForecastTableViewCell else { return UITableViewCell() }
         
-        cell.configureCell(Label: viewModel.keysArray[indexPath.row], Value: String(viewModel.valuesArray[indexPath.row]))
+        let label = viewModel.array![indexPath.row]
+        let value = viewModel.dict![label]!
+        
+        cell.configureCell(Label: viewModel.array![indexPath.row], Value: value)
         
         cell.selectionStyle = .none
         

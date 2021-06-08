@@ -12,18 +12,19 @@ class Forecast {
     
     var forecast: ConsolidatedWeather?
     
-    var keysArray = [String]()
-    var valuesArray = [String]()
     var image = UIImage()
+    
+    var array: [String]?
+    var dict: [String : String]?
     
     func gettingDataReady() {
         
-        let dictionary = ["weatherState": "\(forecast!.weatherStateName)", "minTemp": "\(Int(forecast!.minTemp.rounded()))", "maxTemp": "\(Int(forecast!.maxTemp.rounded()))", "airPressure": "\(forecast!.airPressure.rounded())"]
-
-        for (key, value) in dictionary {
-            keysArray.append(key)
-            valuesArray.append(value)
-        }
+        let properties = ["weather", "minTemp", "maxTemp", "theTemp", "windSpeed", "windDirection", "airPressure", "humidity", "visibility", "predictability"]
+        
+        let dictionary = ["weather": "\(forecast!.weather)", "minTemp": "\(forecast!.minTemp.rounded())", "maxTemp": "\(forecast!.maxTemp.rounded())", "theTemp": "\(forecast!.theTemp.rounded())", "windSpeed": "\(forecast!.windSpeed.rounded())", "windDirection": "\(forecast!.windDirection.rounded()), \(forecast!.windDirectionCompass)", "airPressure": "\(forecast!.airPressure)", "humidity": "\(forecast!.humidity)", "visibility": "\(forecast!.visibility.rounded())", "predictability": "\(forecast!.predictability)"]
+        
+        array = properties.sorted()
+        dict = dictionary
         
     }
     

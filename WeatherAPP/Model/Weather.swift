@@ -34,7 +34,7 @@ struct Weather: Codable {
 // MARK: - ConsolidatedWeather
 struct ConsolidatedWeather: Codable {
     let id: Int
-    let weatherStateName, weatherStateAbbr, windDirectionCompass, created: String
+    let weather, weatherStateAbbr, windDirectionCompass, created: String
     let applicableDate: String
     let minTemp, maxTemp, theTemp, windSpeed: Double
     let windDirection, airPressure: Double
@@ -44,7 +44,7 @@ struct ConsolidatedWeather: Codable {
     
     enum CodingKeys: String, CodingKey {
         case id
-        case weatherStateName = "weather_state_name"
+        case weather = "weather_state_name"
         case weatherStateAbbr = "weather_state_abbr"
         case windDirectionCompass = "wind_direction_compass"
         case created

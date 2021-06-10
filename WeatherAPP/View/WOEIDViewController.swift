@@ -16,6 +16,9 @@ class WOEIDViewController: UIViewController {
         guard let enteredWoeid = woeidTextField.text else { return }
         viewModel.getDataFromServer(forWOEID: enteredWoeid, completion: {
             self.tableView.reloadData()
+            Cities["\(self.viewModel.forecast?.title ?? "")"] = "\(self.woeidTextField.text ?? "")"
+            UserDefaults.standard.setValue(Cities, forKey: "Cities")
+            UserDefaults.standard.set("Yes", forKey: "IsThereSavedData")
         })
     }
     
@@ -51,7 +54,7 @@ class WOEIDViewController: UIViewController {
             let destination = segue.destination as? ForecastViewController
             
             destination?.viewModel.forecast = viewModel.forecast?.consolidatedWeather[selectedRow!]
-            
+            destination?.title = viewModel.forecast?.title
         }
     }
     

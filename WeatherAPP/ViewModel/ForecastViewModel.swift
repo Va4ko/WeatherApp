@@ -19,9 +19,9 @@ class Forecast {
     
     func gettingDataReady() {
         
-        let properties = ["weather", "minTemp", "maxTemp", "theTemp", "windSpeed", "windDirection", "airPressure", "humidity", "visibility", "predictability"]
+        let properties = ["minTemp", "maxTemp", "theTemp", "windSpeed", "windDirection", "airPressure", "humidity", "visibility", "predictability"]
         
-        let dictionary = ["weather": "\(forecast!.weather)", "minTemp": "\(forecast!.minTemp.rounded())", "maxTemp": "\(forecast!.maxTemp.rounded())", "theTemp": "\(forecast!.theTemp.rounded())", "windSpeed": "\(forecast!.windSpeed.rounded())", "windDirection": "\(forecast!.windDirection.rounded()), \(forecast!.windDirectionCompass)", "airPressure": "\(forecast!.airPressure)", "humidity": "\(forecast!.humidity)", "visibility": "\(forecast!.visibility.rounded())", "predictability": "\(forecast!.predictability)"]
+        let dictionary = ["minTemp": "\(forecast!.minTemp.rounded())", "maxTemp": "\(forecast!.maxTemp.rounded())", "theTemp": "\(forecast!.theTemp.rounded())", "windSpeed": "\(forecast!.windSpeed.rounded())", "windDirection": "\(forecast!.windDirection.rounded()), \(forecast!.windDirectionCompass)", "airPressure": "\(forecast!.airPressure)", "humidity": "\(forecast!.humidity)", "visibility": "\(forecast!.visibility.rounded())", "predictability": "\(forecast!.predictability)"]
         
         array = properties.sorted()
         dict = dictionary
@@ -58,7 +58,18 @@ class Forecast {
         imageView.contentMode = .scaleAspectFit
         imageView.image = image
         
+        let textLabel: UILabel = UILabel()
+        textLabel.frame = CGRect(x: 0, y: 182, width: 280.0, height: 30.0)
+        textLabel.center.x = parentView.bounds.width / 2
+        textLabel.textAlignment = NSTextAlignment.center
+        textLabel.font = UIFont(name: "Marker Felt", size: 30)
+        textLabel.textColor = UIColor.white
+        textLabel.backgroundColor = UIColor.clear
+        textLabel.text = forecast?.weather
+        
         parentView.addSubview(imageView)
+        parentView.addSubview(textLabel)
+        parentView.bringSubviewToFront(textLabel)
         
         return parentView
     }

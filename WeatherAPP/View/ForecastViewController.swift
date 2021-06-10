@@ -28,7 +28,7 @@ class ForecastViewController: UITableViewController {
         self.tableView.backgroundView = image
         self.tableView.backgroundView?.contentMode = .scaleAspectFill
         
-        tableView.contentInset.top = 50
+        tableView.contentInset.top = 10
         
     }
     

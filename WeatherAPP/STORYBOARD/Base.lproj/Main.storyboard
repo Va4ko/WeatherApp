@@ -77,8 +77,8 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Kailasa-Bold" family="Kailasa" pointSize="50"/>
                                         <color key="textColor" systemColor="systemRedColor"/>
-                                        <nil key="highlightedColor"/>
-                                        <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <size key="shadowOffset" width="0.0" height="4"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yob-LH-ldS">
@@ -286,7 +286,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JLP-97-14K"/>
+        <segue reference="4hh-f0-mAv"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chart.bar.doc.horizontal" catalog="system" width="115" height="128"/>

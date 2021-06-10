@@ -13,6 +13,29 @@ class CurrentWeather {
     var forecast: Weather?
     var woeid: String?
     
+    var dictionary: [String: String]?
+    var cities = [String]()
+    
+    func pickerViewUpdate(){
+        
+        if UserDefaults.standard.object(forKey: "IsThereSavedData") != nil {
+            cities = []
+            dictionary?.removeAll()
+            let dict = UserDefaults.standard.object(forKey: "Cities") as? [String: String]
+            dictionary = dict!
+            for key in dict!.keys.sorted(by: { $0 < $1 }) {
+                cities.append(key)
+            }
+        } else {
+            cities = []
+            for key in Cities.keys.sorted(by: { $0 < $1 }) {
+                cities.append(key)
+            }
+        }
+        
+    }
+    
+    
     func composeURL(_ string: String) -> URL {
         let encodedText = string.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let urlString = "https://www.metaweather.com/api/location/\(encodedText!)"

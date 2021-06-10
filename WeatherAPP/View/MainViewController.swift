@@ -26,6 +26,8 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: true)
+        viewModel.pickerViewUpdate()
+        PickerView.reloadAllComponents()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -41,7 +43,7 @@ class MainViewController: UIViewController {
             let destination = segue.destination as? ForecastViewController
             
             destination?.viewModel.forecast = viewModel.forecast?.consolidatedWeather[selectedRow!]
-
+            destination?.title = viewModel.forecast?.title
         }
     }
     
@@ -62,9 +64,18 @@ class MainViewController: UIViewController {
 extension MainViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.selectedRow(inComponent: 0) != 0 {
-            viewModel.getDataFromServer(forWOEID: Cities[row].WOEID, completion: {
-                self.tableView.reloadData()
-            })
+            
+            let selectedCity = viewModel.cities[row]
+            
+            if viewModel.dictionary != nil {
+                viewModel.getDataFromServer(forWOEID: viewModel.dictionary![selectedCity]! , completion: {
+                    self.tableView.reloadData()
+                })
+            } else {
+                viewModel.getDataFromServer(forWOEID: Cities[selectedCity]! , completion: {
+                    self.tableView.reloadData()
+                })
+            }
             
         } else {
             viewModel.forecast = nil
@@ -79,13 +90,14 @@ extension MainViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Cities.count
+        return viewModel.cities.count
     }
     
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let pickerLabel = UILabel()
-        let titleData = Cities[row].name
+        let titleData = viewModel.cities[row]
+        
         let myTitle = NSAttributedString(string: titleData, attributes: [NSAttributedString.Key.font:UIFont(name: "Arial", size: 25.0)!, NSAttributedString.Key.foregroundColor:UIColor.red])
         pickerLabel.attributedText = myTitle
         pickerLabel.textAlignment = .center

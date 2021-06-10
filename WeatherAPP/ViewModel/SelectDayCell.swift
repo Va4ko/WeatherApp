@@ -1,15 +1,16 @@
 //
-//  DayCell.swift
+//  SelectDayCell.swift
 //  WeatherAPP
 //
-//  Created by Vachko on 4.06.21.
+//  Created by Vachko on 10.06.21.
 //
 
 import UIKit
 
-class DayCell: UITableViewCell {
+class SelectDayCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
+    
     
     func configureCell(forecast: ConsolidatedWeather) {
         let dateformatter = DateFormatter()

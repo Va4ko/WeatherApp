@@ -19,26 +19,41 @@ class MainViewController: UIViewController {
         
         setBackground(named: "Background")
         
+        registerCell()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableView(notification:)), name: NSNotification.Name(rawValue: "reload"), object: nil)
     }
     
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showForecast",
-           let destination = segue.destination as? ForecastViewController {
-            if let cell = sender as? DayCell, let indexPath = tableView.indexPath(for: cell) {
-                
-                destination.viewModel.forecast = viewModel.forecast?.consolidatedWeather[indexPath.row]
-                
-            }
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowForecast" {
+            let indexPath = self.tableView.indexPathForSelectedRow
+            let selectedRow = indexPath?.row
+            let destination = segue.destination as? ForecastViewController
+            
+            destination?.viewModel.forecast = viewModel.forecast?.consolidatedWeather[selectedRow!]
+
+        }
+    }
     
     // MARK: - Helpers
     
     @objc func reloadTableView(notification: NSNotification){
         self.dismiss(animated: false, completion: self.tableView.reloadData)
+    }
+    
+    private func registerCell() {
+        let cell = UINib(nibName: "SelectDayCell", bundle: nil)
+        tableView.register(cell, forCellReuseIdentifier: "SelectDayCell")
     }
     
 }
@@ -82,8 +97,8 @@ extension MainViewController: UIPickerViewDataSource {
 
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showForecast", sender: DayCell.self)
-
+        performSegue(withIdentifier: "ShowForecast", sender: tableView)
+        
     }
 }
 
@@ -100,7 +115,7 @@ extension MainViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DayCell", for: indexPath) as? DayCell else {return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SelectDayCell", for: indexPath) as? SelectDayCell else { return UITableViewCell() }
         
         let forecast = viewModel.forecast?.consolidatedWeather[indexPath.row]
         cell.configureCell(forecast: forecast!)

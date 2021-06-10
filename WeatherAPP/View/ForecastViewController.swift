@@ -17,6 +17,8 @@ class ForecastViewController: UITableViewController {
         
         viewModel.gettingDataReady()
         
+        registerCell()
+        
         viewModel.downloadLogo(completion: {
             self.tableView.reloadData()
         })
@@ -28,6 +30,11 @@ class ForecastViewController: UITableViewController {
         
         tableView.contentInset.top = 50
         
+    }
+    
+    private func registerCell() {
+        let cell = UINib(nibName: "ForecastCell", bundle: nil)
+        self.tableView.register(cell, forCellReuseIdentifier: "ForecastCell")
     }
     
     // MARK: - Table view data source
@@ -58,7 +65,7 @@ class ForecastViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastCell", for: indexPath) as? ForecastTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastCell", for: indexPath) as? ForecastCell else { return UITableViewCell() }
         
         let label = viewModel.array![indexPath.row]
         let value = viewModel.dict![label]!

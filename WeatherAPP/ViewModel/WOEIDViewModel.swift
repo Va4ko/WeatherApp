@@ -35,12 +35,14 @@ class WOEIDCurrentWeather {
                 
                 if let error = error as NSError? {
                     print(error)
+                    self.forecast = nil
                     self.popAlert("Error with fetching data: \(error.code)")
                     return
                 }
                 
                 guard let httpResponse = response as? HTTPURLResponse,
                       (200...299).contains(httpResponse.statusCode) else {
+                    self.forecast = nil
                     self.popAlert("Service Temporarily Unavailable or entered WOEID is invalid!")
                     return
                 }
@@ -54,6 +56,7 @@ class WOEIDCurrentWeather {
                     }
                     
                 } else {
+                    self.forecast = nil
                     self.popAlert("\("Maybe your internet connection is failed or the server is temporarily down! Please try again later!")")
                     
                 }
@@ -77,6 +80,7 @@ class WOEIDCurrentWeather {
             let viewController = self.currentVC()
             let alert = UIAlertController(title: "Attention!", message: message, preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default){ _ in
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "preload"), object: nil)
                 alert.dismiss(animated: true, completion: nil)
             }
             

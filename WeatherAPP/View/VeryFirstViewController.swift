@@ -30,7 +30,7 @@ class VeryFirstViewController: UIViewController {
             Hello!
 
             This is Weather app.
-            Welcome to my app that i made for Musala Soft.
+            Welcome to my app that i made for training purpose.
 
             You see this because you are opening the app for the very first time!
             Next time, you will start from the application home screen.
